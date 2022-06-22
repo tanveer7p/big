@@ -1,0 +1,39 @@
+Volume - PetaBytes,Exabytes,Zetta
+Velocity - the speed at which the data flows
+Variety - different types - 
+
+Veracity - reliability
+Value - 
+
+Hadoop
+Store - HDFS - Hadoop Distributed File System - Blocks - High Availability <-Replication of data
+Process - Map Reduce - Job ->Tasks ---> Each task will be executed by different nodes parellel
+
+Vertical Scaling - Scaling up - increasing the power of single machine
+Horizontal scaling - Scaling out - 
+
+Batch Processing
+not suitable real-time data processing - Spark
+
+HDFS - Master node - Daemon - NameNode - will not store the actual data- Stores Metadata - number of blocks belonging to a file, where these blocks are stored, how many replicas are present and where it is present
+       Slave Nodes  - Data Node - Stores the acutal data 
+Name node - Daemon - MAster - HDFS
+Data Node - Daemon - Slave nodes - HDFS
+
+Map Reduce - Master - Job Tracker
+             Slave Nodes - Task Tracker
+Mapper - each block /split 
+Reducer 
+
+
+
+
+
+Map Reduce - Job Tracker - Master
+             Task Tracker
+
+500MB - 4 blocks of size 128 MB
+
+
+Hadoop Cluster - commodity hardware - 10-node hadoop cluster
+Master-slave architecture

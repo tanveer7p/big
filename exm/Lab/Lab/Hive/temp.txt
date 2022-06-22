@@ -1,0 +1,27 @@
+Dubai,02/05/2022,40,30         tokenizer = ['Dubai','02/05/2022','40','30']  CMax=Dubai_Max, CMin=Dubai_Min, MaxTemp=40,MinTemp=30
+RAK,02/05/2022,40,25
+Fujairah,02/05/2022,34,29
+AbuDhabi,02/05/2022,41,29
+Dubai,08/05/2022,40,29
+RAK,08/05/2022,37,24
+Fujairah,08/05/2022,35,28
+AbuDhabi,08/05/2022,38,29
+Dubai,10/05/2022,39,26
+RAK,10/05/2022,38,20
+Fujairah,10/05/2022,32,26
+AbuDhabi,10/05/2022,39,25
+
+
+Dubai_Max,Dubai_Min,RAK_Max,RAK_Min,Fujairah_Max,Fujairah_Min,AbuDhabi_Max,AbuDhabi_Min
+
+
+Mapper - <Key,Value> - <LongWritable,Text,Text,IntWritable> CityName_Max, MaxTemp; City_Min,MinTemp   <Dubai_Max, 40>,<Dubai_Min,30> 
+                                                                 <Dubai_Max,40>,<Dubai_Min,29>
+                                                                 <Dubai_Max,39>,<Dubai_Min,26>
+                                         
+
+
+                   Sort&Shuffle                         <Dubai_Max,[40,40,39]>,<Dubai_Min,[30,29,26]>  MinTemp=26     <Dubai_Min,26>, <Dubai_Max,40>
+
+
+Reducer Output - <Key,Value>  - <Dubai_Max,40>,<Dubai_Min,26>

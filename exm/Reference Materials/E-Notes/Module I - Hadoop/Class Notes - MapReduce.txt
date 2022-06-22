@@ -1,0 +1,25 @@
+HDFS  ->  Master - NameNode - Metadata - sample.txt - number of blocks - where blocks are stored
+          Slave  - DataNode - stores the actual data
+
+
+Rack Awareness - minimize the number of inter-rack communications
+
+
+
+Mapper - process one block of data considering one line at a time
+Input-<Key,Value> - <lineno,entireline of input>
+Output - <Key,Value> -> Problem Specific  - Word Count - <Word,Count>
+
+Hello all    input: <1,"Hello all">    Output: <"Hello",1>, <"all",1>
+how do you do       <2,"how do you do"> Output: <how,1>,<do,1>,<you,1>,<do,1>   
+hope you  enjoy learning Hadoop -> <hope,1>,<you,1>
+learning is fun
+do you love learning hadoop
+i love learning hadoop
+
+
+Shuffle & Sort - Input : <key,value>
+                 Output: <key,list of values> <do,<1,1>,<learning,[1,1,1,1]>
+
+Reducer - Input:<key,list of values> <learning,[1,1,1,1]>
+          Output: <key(Text),value(IntWritable)> <learning,4>  

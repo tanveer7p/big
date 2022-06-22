@@ -1,0 +1,97 @@
+Read and Map - 
+
+val rdd1 = sc.parallelize(Array("jan","feb","mar","apr","may"))
+rdd1.collect()
+rdd1.collect().foreach(println)
+rdd1.getNumPartitions
+val rdd2 = rdd1.map(month => (month.charAt(0),month))
+--------------------------------------------------------------------
+Read a file - 
+
+val dataRDD = sc.textFile("/inputdata.txt")
+
+----------------------------------------------------------------------
+Filter -
+
+
+val rdd3 = sc.parallelize(Array(1,2,3,4,5,6))
+val rdd4 = rdd3.filter(_%2==0)
+val rdd4 = rdd3.filter(ele => ele%2==0) //Another way
+
+---------------------------------------------------------------------
+
+Group By 
+
+val data = sc.parallelize(Array((1,"Lexi"),(2,"Alex"),(1,"Derek"),(4,"Meredith"),(5,"Christina")))
+data.groupByKey
+data.groupByKey.collect()
+
+----------------------------------------------------------------------
+Word Count :
+
+val rdd1 = sc.textFile("/inputdata.txt")
+rdd1.flatMap(_.split(" ")).map(word => (word,1)).reduceByKey(_+_).collect.foreach(println)
+
+-----------------------------------------------------------------------
+Save the rdd into hdfs :
+
+val rdd6 = sc.parallelize(Seq(1,"shubham"))
+rdd6.saveAsTextFile("/common4all/edureka_200115/input/rdddata")
+
+--------------------------------------------------------------------------
+
+Count By Value
+
+val rdd1 = sc.parallelize (List (1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,2 ,4 ,2 ,1 ,1 ,1 ,1 ,1))
+rdd1.countByValue
+
+--------------------------------------------------------------------------------
+
+val c = sc.parallelize(List((3,"Gnu"),(3,"Yak"),(5,"Mouse"),(3,"Dog")),3)
+c.countByKey
+
+-------------------------------------------------------------------------------
+toDebugString
+
+val a = sc.paralleize(1 to 9,3)
+val b = sc.parallelize(1 to 3,3)
+
+val c = a.subtract(b)
+c.toDebugString
+----------------------------------------------------------------------------------
+
+Statistics 
+
+val a = sc.parallelize(List(1,2,3,4,5))
+a.mean
+a.sum
+a.variance
+a.stats
+----------------------------------------------------------------------------------
+Persist and Unpersist
+
+val a = sc.parallelize(1 to 100000 ,2) 
+a.persist(org.apache.spark.storage.StorageLevel.DISK_ONLY)
+a.getStorageLevel.description
+a.unpersist()
+a.persist(org.apache.spark.storage.StorageLevel.MEMORY_ONLY)
+a.cache
+a.persist(org.apache.spark.storage.StorageLevel.MEMORY_AND_DISK_SER)
+-------------------------------------------------------------------------------------
+Broadcast Variables
+
+val broadcastVar = sc.broadcast(Array(1, 2, 3)) 
+broadcastVar.value
+------------------------------------------------------------------------------------- 
+
+Python Example for Word Count :
+
+textFile = sc.textFile("/inputdata.txt")
+rdd1 = textFile.flatMap(lambda line: line.split(" "))
+rdd2 = rdd1.map(lambda word: (word,1))
+rdd3 = rdd2.reduceByKey(lambda a,b: a+b)
+rdd3.collect()
+
+
+
+

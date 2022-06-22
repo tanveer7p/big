@@ -1,0 +1,18 @@
+1. Gathering data:
+Identify the data source  and collect the data. Analyze the  raw data and understand the data attributes, quality and limitations
+2. Prepare the data and pre-process.
+Data preprocessing improves raw data quality
+Integrate with various sources of data to enrich the data
+Explore the data using graphs and stastics
+Clean the data by removing nulls, fill missing data, correct data but maintain orginality
+Data transformation using scaling, adding or adjusting features, values
+Split data in sets of training and testing data in ration of 70 /30
+3. Choose the model 
+Analyze the data to choose the best model.
+Use  summary , metrics , graphs to choose best fitting model
+4. Train the model to improve prediction accurancy and reduce errors
+5. Evaluation
+Use test data to evaluate the performance of the selected models and compare results
+6. Prameter tuning 
+Evaluation will help metric your models performance and use results to go back and training the model if the evaluation results have more recall or less accurancy, which can be achived by tuning the paramters
+7.Prediction - use real time data to predict the outcome

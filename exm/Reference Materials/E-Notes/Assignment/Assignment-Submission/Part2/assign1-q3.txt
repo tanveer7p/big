@@ -1,0 +1,74 @@
+[tanveer7p6164@cxln4 ~]$ hive
+log4j:WARN No such property [maxFileSize] in org.apache.log4j.DailyRollingFileAppender.
+
+Logging initialized using configuration in file:/etc/hive/2.6.2.0-205/0/hive-log4j.properties
+hive> CREATE TABLE IF NOT EXISTS taxidata (vendor_id string, pickup_datetime 
+    > string, dropoff_datetime string, passenger_count int, trip_distance DECIMAL(9,6), 
+    > pickup_longitude DECIMAL(9,6), pickup_latitude DECIMAL(9,6), rate_code int, 
+    > store_and_fwd_flag string, dropoff_longitude DECIMAL(9,6), dropoff_latitude 
+    > DECIMAL(9,6), payment_type string, fare_amount DECIMAL(9,6), extra 
+    > DECIMAL(9,6), mta_tax DECIMAL(9,6), tip_amount DECIMAL(9,6), 
+    > tolls_amount DECIMAL(9,6), total_amount DECIMAL(9,6), trip_time_in_secs 
+    > int ) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED as 
+    > TEXTFILE TBLPROPERTIES ("skip.header.line.count"="1") 
+    > 
+    > ;
+OK
+Time taken: 1.81 seconds
+hive> describe taxidata;
+OK
+vendor_id               string                                      
+pickup_datetime         string                                      
+dropoff_datetime        string                                      
+passenger_count         int                                         
+trip_distance           decimal(9,6)                                
+pickup_longitude        decimal(9,6)                                
+pickup_latitude         decimal(9,6)                                
+rate_code               int                                         
+store_and_fwd_flag      string                                      
+dropoff_longitude       decimal(9,6)                                
+dropoff_latitude        decimal(9,6)                                
+payment_type            string                                      
+fare_amount             decimal(9,6)                                
+extra                   decimal(9,6)                                
+mta_tax                 decimal(9,6)                                
+tip_amount              decimal(9,6)                                
+tolls_amount            decimal(9,6)                                
+total_amount            decimal(9,6)                                
+fare_amount             decimal(9,6)                                
+trip_time_in_secs       int                                         
+Time taken: 0.313 seconds, Fetched: 19 row(s)
+hive> load data local inpath 'yellow_tripdata_2015-01-06.csv' overwrite into table taxidata;
+Loading data to table default.taxidata
+Table default.taxidata stats: [numFiles=1, numRows=0, totalSize=1512490, rawDataSize=0]
+OK
+Time taken: 0.692 seconds
+hive> select count(1) from taxidata;
+Query ID = tanveer7p6164_20220607141814_0275daa9-0bcb-41cd-94ec-26f29fdb1867
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1648130833540_6709, Tracking URL = http://cxln2.c.thelab-240901.internal:8088/proxy/application_1648130833540_6709/
+Kill Command = /usr/hdp/2.6.2.0-205/hadoop/bin/hadoop job  -kill job_1648130833540_6709
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-06-07 14:18:22,451 Stage-1 map = 0%,  reduce = 0%
+2022-06-07 14:18:29,795 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.2 sec
+2022-06-07 14:18:36,034 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 6.21 sec
+MapReduce Total cumulative CPU time: 6 seconds 210 msec
+Ended Job = job_1648130833540_6709
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 6.21 sec   HDFS Read: 1524919 HDFS Write: 6 SUCCESS
+Total MapReduce CPU Time Spent: 6 seconds 210 msec
+OK
+10000
+Time taken: 22.943 seconds, Fetched: 1 row(s)
+
+	hive> select fare_amount,tip_amount,total_amount from taxidata where total_amount>1000;
+OK
+Time taken: 0.066 seconds

@@ -1,0 +1,71 @@
+1. show databases;
+
+2. create database halhivedb;
+
+2. use <database name>;
+   use halhivedb;
+
+3. show tables;
+
+4. create table myemp(dept string, des string, gender string) row format delimited fields terminated by '\t' stored as textfile;
+
+5. describe myemp;
+
+6. describe extended myemp;  [location:hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/halhivedb.db/myemp]
+
+ ******Loading data from local file system*******
+
+7. load data local inpath 'EmpData.txt' overwrite into table myemp;
+
+****Filtering records*****
+
+8. create table empCSE as select * from myemp where dept='CSE';
+
+9. select * from myemp where dept='CSE'and gender = 'F';
+
+*******Creating dynamic partition on two columns*********
+
+10. create table senttab(itemtype string, revst string, sentsc tinyint) row format delimited fields terminated by '\t';
+
+11. load data local inpath 'sentiments.txt' overwrite into table senttab;
+
+12. set hive.exec.dynamic.partition.mode=nonstrict;
+
+13. create table senttabpart(RevSt String) comment 'Sentiment Reviews' partitioned by (itemtype string, sentsc tinyint) row format delimited fields
+ terminated by '\t';
+
+14. insert into senttabpart partition(itemtype,sentsc) select revst,itemtype,sentsc from senttab;
+
+****Transferrring the output of a select query to a directory******
+
+15. insert overwrite directory '/halemp/selectouttab' row foramt delimited fields terminated by '|' select * from senttab where itemtype='Product';
+
+*******Dynamic Partitioning and Clustering****** 
+
+16. create table titanic(name string, gender string, age int) row format delimited fields terminated by '\t' stored as textfile;
+
+17. load data local inpath 'titanic.txt' overwrite into table titanic;
+
+18. select * from titanic limit 3;
+
+19. create table titanpart(name string, age int) partitioned by (gender string) clustered by (age) into 10 buckets;
+
+20. set hive.exec.dynamic.partition.mode=nonstrict;
+
+21. set hive.enforce.bucketing=true;
+
+22. insert into titanpart partition(gender) select name,age,gender from titanic;
+
+*****Creating External Table*******
+
+23. create external table tempexttab(city string, cdate string, maxtemp int, mintemp int) row format delimited fields terminated by '\t' location '
+hdfs://cxln1.c.thelab-240901.internal:8020/user/haleemamca9795/hiveext';
+
+24. select * from tempexttab limit 3;
+
+25. create external table tempexttab(cityname string,tdate string,maxtemp int,mintemp int) row format delimited fields terminated by '\t' location 'hdfs://cxln1.c.thelab-240901.internal:8020/user/haleemamca9795/exttab';
+
+
+
+
+hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mahe2022db.db/senttab

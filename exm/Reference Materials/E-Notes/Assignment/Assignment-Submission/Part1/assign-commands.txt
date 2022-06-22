@@ -1,0 +1,5 @@
+Q1: Lengthwise Word Count Problem
+Upload the file to hdfs using put command
+[tanveer7p6164@cxln4 Assignment]$ hdfs dfs -put assign-text1.txt
+hadoop jar assign1.jar MyPack/WordCountLength assign-text1.txt wcout1
+
